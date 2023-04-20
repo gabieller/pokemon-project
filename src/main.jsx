@@ -8,7 +8,7 @@ import Details from "./routes/Details";
 import "./index.css";
 import Pokedex from "./components/Pokedex";
 import Favorites from "./routes/Favorites";
-
+import { FavoriteProvider } from "./contexts/favoritesContext";
 
 //creating the routes of the application
 const router = createBrowserRouter([
@@ -35,6 +35,13 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />,
+    <FavoriteProvider
+      value={{
+        favoritePokemons: favorites,
+        updateFavoritePokemons: updateFavoritePokemons,
+      }}
+    >
+      <RouterProvider router={router} />
+    </FavoriteProvider>
   </React.StrictMode>
 );

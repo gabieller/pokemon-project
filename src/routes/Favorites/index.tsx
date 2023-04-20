@@ -9,11 +9,6 @@ import PokemonCard from "../../components/PokemonCard/PokemonCard";
 
 const Favorites = () => {
   const [pokemons, setPokemons] = useState([]);
-  
-  useEffect(() => {
-    // const ids = JSON.parse(localStorage.getItem("favoritesId")) || [];
-    setPokemons(ids);
-  }, [pokemons]);
 
   const fetchPokemons = async () => {
     try {
@@ -27,7 +22,6 @@ const Favorites = () => {
       const results = await Promise.all(promises);
 
       setPokemons(results);
-
     } catch (error) {
       console.log(error);
       throw error;
@@ -37,7 +31,6 @@ const Favorites = () => {
   useEffect(() => {
     fetchPokemons();
   }, []);
-
 
   return (
     <Container>

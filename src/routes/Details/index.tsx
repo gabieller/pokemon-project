@@ -10,6 +10,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Container, IconButton } from "@mui/material";
 
 import * as S from "./styles";
+import { FavoriteProvider } from "../../contexts/favoritesContext";
+import NavBar from "../../components/NavBar";
 
 interface Pokemon {
   id: string;
@@ -72,7 +74,15 @@ const Details = () => {
   };
 
   return (
+    <FavoriteProvider
+      value={{
+        favoritePokemons: favorites,
+        updateFavoritePokemons: updateFavoritePokemons,
+      }}
+    >
+    
     <Container>
+      <NavBar />
       <S.Details>
         <div>
           <S.ImageCard>
@@ -111,9 +121,7 @@ const Details = () => {
           <hr />
           <S.Stats>
             <h3> BODY STATS:</h3>
-
             <FaRulerVertical />
-
             <span>{divideValue(pokemonDetails?.height, 10)}m</span>
             <FaWeight />
             <span>{divideValue(pokemonDetails?.weight, 100)} kg</span>
@@ -134,6 +142,7 @@ const Details = () => {
         </S.Description>
       </S.Details>
     </Container>
+    </FavoriteProvider>
   );
 };
 
