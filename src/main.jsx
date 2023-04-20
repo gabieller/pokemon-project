@@ -6,8 +6,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Details from "./routes/Details";
 import Favorites from "./routes/Favorites";
-import "./index.css";
 import Pokedex from "./components/Pokedex";
+
+import "./index.css";
 
 //creating the routes of the application
 const router = createBrowserRouter([

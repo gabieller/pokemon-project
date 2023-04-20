@@ -9,6 +9,7 @@ const Favorites = () => {
   const [pokemons, setPokemons] = useState([]);
 
   useEffect(() => {
+    //@ts-ignore
     const ids = JSON.parse(localStorage.getItem("favoriteId")) || [];
 
     const fetchPokemons = async () => {

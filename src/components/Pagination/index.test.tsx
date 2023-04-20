@@ -67,34 +67,4 @@ describe("Pagination component", () => {
     const nextButton = queryByRole("button", { name: /next page/i });
     expect(nextButton).not.toBeInTheDocument();
   });
-
-  // it("should call the handlePreviousPage function when the previous page button is clicked", () => {
-  //   const mockHandlePreviousPage = jest.fn();
-  //   const { getByRole } = render(
-  //     <Pagination
-  //       page={2}
-  //       totalPages={5}
-  //       handlePreviousPage={mockHandlePreviousPage}
-  //       handleNextPage={undefined}
-  //     />
-  //   );
-  //   const previousButton = getByRole("button", { name: /previous page/i });
-  //   fireEvent.click(previousButton);
-  //   expect(mockHandlePreviousPage).toHaveBeenCalledTimes(1);
-  // });
-
-  // it("should call the handleNextPage function when the next page button is clicked", () => {
-  //   const mockHandleNextPage = jest.fn();
-  //   const { getByRole } = render(
-  //     <Pagination
-  //       page={4}
-  //       totalPages={5}
-  //       handleNextPage={mockHandleNextPage}
-  //       handlePreviousPage={undefined}
-  //     />
-  //   );
-  //   const nextButton = getByRole("button", { name: /next page/i });
-  //   fireEvent.click(nextButton);
-  //   expect(mockHandleNextPage).toHaveBeenCalledTimes(1);
-  // });
 });
