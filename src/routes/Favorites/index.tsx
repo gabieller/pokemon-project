@@ -1,52 +1,38 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getPokemon } from "../../api";
+
+import PokemonList from "../../components/PokemonList";
 
 import * as S from "./styles";
-import { Container } from "@mui/material";
-// import FavoriteContext, { FavoriteProvider } from "../../contexts/favoritesContext";
-import { getPokemon, getPokemonData } from "../../api";
-import { Link } from "react-router-dom";
-import PokemonCard from "../../components/PokemonCard/PokemonCard";
 
 const Favorites = () => {
   const [pokemons, setPokemons] = useState([]);
 
-  const fetchPokemons = async () => {
-    try {
-      const data = await getPokemon(1);
-
-      //TODO: explain code
-      const promises = data.results.map(async ({ url }) => {
-        return await getPokemonData(url);
-      });
-
-      const results = await Promise.all(promises);
-
-      setPokemons(results);
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
-
   useEffect(() => {
+    const ids = JSON.parse(localStorage.getItem("favoriteId")) || [];
+
+    const fetchPokemons = async () => {
+      try {
+        const promises = ids.map((id) => getPokemon(id));
+
+        const results = await Promise.all(promises);
+
+        setPokemons(results);
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    };
+
     fetchPokemons();
   }, []);
 
   return (
-    <Container>
-      lista de pokemons favoritos
-      {/* <S.Grid> */}
-      {/* {pokemons &&
-        pokemons.map((pokemon, i) => (
-          <Link
-            to={`/details/${pokemon.id}`}
-            style={{ textDecoration: "none" }}
-          >
-            <PokemonCard key={i} pokemon={pokemon} />
-          </Link>
-        ))} */}
-      {/* </S.Grid> */}
-    </Container>
+    <S.Container>
+      <h3>My favorite pokémons</h3>
+
+      <PokemonList pokemons={pokemons || []} />
+    </S.Container>
   );
 };
 

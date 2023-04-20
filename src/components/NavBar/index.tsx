@@ -1,9 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-import FavoriteContext from "../../contexts/favoritesContext";
-
-
 
 import * as S from "./styles";
 
@@ -11,21 +7,20 @@ import * as S from "./styles";
 import logo from "../../assets/logo.png";
 
 const NavBar = () => {
-  const [favoritesId, setFavoritesId] = useState([]);
-  const { favoritePokemons } = useContext(FavoriteContext);
-  
-  // useEffect(() => {
-  //   const ids = JSON.parse(localStorage.getItem("favoritesId")) || [];
-  //   setFavoritesId(ids);
-  // }, []);
+  const [favoriteId, setFavoriteId] = useState([]);
+
+  useEffect(() => {
+    const ids = JSON.parse(localStorage.getItem("favoriteId"));
+    setFavoriteId(ids);
+  }, []);
 
   return (
     <S.NavBar>
       <Link to="/" style={{ textDecoration: "none" }}>
-        <S.Image src={logo} />
+        <S.Image data-testid="logo" src={logo} />
       </Link>
       <Link to="/favorites" style={{ textDecoration: "none" }}>
-        <span>My favorites pokémons ({favoritePokemons.length})</span>
+        <span>My favorite pokémons</span>
       </Link>
     </S.NavBar>
   );

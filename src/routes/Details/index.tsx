@@ -10,7 +10,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Container, IconButton } from "@mui/material";
 
 import * as S from "./styles";
-import { FavoriteProvider } from "../../contexts/favoritesContext";
+import { FavoriteProvider } from "../../contexts/favoriteContext";
 import NavBar from "../../components/NavBar";
 
 interface Pokemon {
@@ -27,7 +27,7 @@ interface Pokemon {
 
 const Details = () => {
   const [pokemonDetails, setPokemonDetails] = useState<Pokemon>();
-  const [favorites, setFavorites] = useState([]);
+  const [favorite, setFavorite] = useState([]);
 
   const { id } = useParams();
 
@@ -49,8 +49,8 @@ const Details = () => {
   }, [id]);
 
   const loadFavoritePokemons = () => {
-    const ids = JSON.parse(localStorage.getItem("favoritesId")) || [];
-    setFavorites(ids);
+    const ids = JSON.parse(localStorage.getItem("favoriteId")) || [];
+    setFavorite(ids);
   };
 
   useEffect(() => {
@@ -58,15 +58,15 @@ const Details = () => {
   }, []);
 
   const updateFavoritePokemons = (id) => {
-    const updatedFavorites = [...favorites];
-    const favoriteIndex = favorites.indexOf(id);
+    const updatedFavorite = [...favorite];
+    const favoriteIndex = favorite.indexOf(id);
     if (favoriteIndex >= 0) {
-      updatedFavorites.splice(favoriteIndex, 1);
+      updatedFavorite.splice(favoriteIndex, 1);
     } else {
-      updatedFavorites.push(id);
+      updatedFavorite.push(id);
     }
-    localStorage.setItem("favoritesId", JSON.stringify(updatedFavorites));
-    setFavorites(updatedFavorites);
+    localStorage.setItem("favoriteId", JSON.stringify(updatedFavorite));
+    setFavorite(updatedFavorite);
   };
 
   const onHeartClick = () => {
@@ -74,22 +74,14 @@ const Details = () => {
   };
 
   return (
-    <FavoriteProvider
-      value={{
-        favoritePokemons: favorites,
-        updateFavoritePokemons: updateFavoritePokemons,
-      }}
-    >
-    
     <Container>
-      <NavBar />
       <S.Details>
         <div>
           <S.ImageCard>
             <img src={pokemonDetails?.sprites.front_default} />
           </S.ImageCard>
           <IconButton onClick={onHeartClick}>
-            {favorites.includes(pokemonDetails?.id) ? (
+            {favorite.includes(pokemonDetails?.id) ? (
               <FavoriteIcon style={{ fill: "#fff" }} />
             ) : (
               <FavoriteBorderIcon style={{ fill: "#fff" }} />
@@ -142,7 +134,6 @@ const Details = () => {
         </S.Description>
       </S.Details>
     </Container>
-    </FavoriteProvider>
   );
 };
 

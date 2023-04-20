@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getPokemonData, getPokemons } from "../../api";
-import { Link } from "react-router-dom";
 
-
+import PokemonList from "../PokemonList";
 import Pagination from "../Pagination";
-import PokemonCard from "../PokemonCard/PokemonCard";
 
 import { Container } from "@mui/material";
-
-import * as S from "./styles";
 
 const Pokedex = () => {
   const [page, setPage] = useState(0);
@@ -53,28 +49,16 @@ const Pokedex = () => {
     fetchPokemons();
   }, [page]);
 
-
   return (
-
-      <Container>
-        <S.Grid>
-          {pokemons &&
-            pokemons.map((pokemon, i) => (
-              <Link
-                to={`/details/${pokemon.id}`}
-                style={{ textDecoration: "none" }}
-              >
-                <PokemonCard key={i} pokemon={pokemon} />
-              </Link>
-            ))}
-        </S.Grid>
-        <Pagination
-          page={page + 1}
-          totalPages={totalPages}
-          handlePreviousPage={handlePreviousPage}
-          handleNextPage={handleNextPage}
-        />
-      </Container>
+    <Container>
+      <PokemonList pokemons={pokemons || []} />
+      <Pagination
+        page={page + 1}
+        totalPages={totalPages}
+        handlePreviousPage={handlePreviousPage}
+        handleNextPage={handleNextPage}
+      />
+    </Container>
   );
 };
 
