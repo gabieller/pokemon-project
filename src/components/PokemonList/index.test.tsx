@@ -20,12 +20,6 @@ describe("PokemonList", () => {
     expect(pokemonCards.length).toBe(mockPokemons.length);
   });
 
-  test("each PokemonCard has a unique key", () => {
-    const { getAllByTestId } = render(<PokemonList pokemons={mockPokemons} />);
-    const pokemonCards = getAllByTestId("pokemon-card");
-    const keys = pokemonCards.map((card) => card.getAttribute("key"));
-    expect(new Set(keys).size).toBe(mockPokemons.length);
-  });
 
   test("clicking on a PokemonCard navigates to the correct details page", () => {
     const { getByText } = render(

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import * as S from "./styles";
@@ -7,13 +7,6 @@ import * as S from "./styles";
 import logo from "../../assets/logo.png";
 
 const NavBar = () => {
-  const [favoriteId, setFavoriteId] = useState([]);
-
-  useEffect(() => {
-    const ids = JSON.parse(localStorage.getItem("favoriteId"));
-    setFavoriteId(ids);
-  }, []);
-
   return (
     <S.NavBar>
       <Link to="/" style={{ textDecoration: "none" }}>

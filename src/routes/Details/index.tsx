@@ -10,8 +10,6 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Container, IconButton } from "@mui/material";
 
 import * as S from "./styles";
-import { FavoriteProvider } from "../../contexts/favoriteContext";
-import NavBar from "../../components/NavBar";
 
 interface Pokemon {
   id: string;
@@ -93,16 +91,16 @@ const Details = () => {
           <S.Infos>
             <p>{pokemonDetails?.name}</p>
 
-            {pokemonDetails?.types.map(({ type }) => (
-              <S.TypeTag>{type.name}</S.TypeTag>
+            {pokemonDetails?.types.map(({ type, i }) => (
+              <S.TypeTag key={i}>{type.name}</S.TypeTag>
             ))}
           </S.Infos>
           <hr />
           <S.RowGrid>
             <h3>ABILITIES:</h3>
 
-            {pokemonDetails?.abilities.map(({ ability }) => (
-              <p>{ability.name}</p>
+            {pokemonDetails?.abilities.map(({ ability, i }) => (
+              <p key={i}>{ability.name}</p>
             ))}
           </S.RowGrid>
           <hr />
@@ -122,8 +120,8 @@ const Details = () => {
 
           <h3> POWER STATS:</h3>
           <S.Grid>
-            {pokemonDetails?.stats.map(({ stat, base_stat }) => (
-              <S.Powers>
+            {pokemonDetails?.stats.map(({ stat, base_stat, i }) => (
+              <S.Powers key={i}>
                 <S.CircleStat bgColor={statsValue(base_stat)}>
                   <span>{base_stat}</span>
                 </S.CircleStat>

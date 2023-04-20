@@ -16,7 +16,10 @@ const Pagination = ({
     <S.Pagination>
       {page !== 1 && (
         <IconButton onClick={handlePreviousPage}>
-          <ArrowBackIosIcon style={{ fill: '#fff' }}/>
+          <ArrowBackIosIcon
+            style={{ fill: "#fff" }}
+            data-testid="previous-button"
+          />
         </IconButton>
       )}
       <div>
@@ -24,7 +27,10 @@ const Pagination = ({
       </div>
       {page !== totalPages && (
         <IconButton onClick={handleNextPage}>
-          <ArrowForwardIosIcon style={{ fill: '#fff' }} />
+          <ArrowForwardIosIcon
+            style={{ fill: "#fff" }}
+            data-testid="next-button"
+          />
         </IconButton>
       )}
     </S.Pagination>
