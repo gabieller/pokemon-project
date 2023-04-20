@@ -1,5 +1,8 @@
 # <div align="center"> Pokedex React App</div>
 
+
+<img src="src/assets/pokedex.png"/>
+
 <p align="center">This is a sample React application that connects to the PokeAPI using Vite as a build tool, TypeScript for type checking, Material UI for styling, and Styled Components for additional styling options.</p>
 
 ## 🛠️ Technologies
@@ -46,3 +49,16 @@ yarn dev
 ```
 
 This will start a local development server on https://localhost:5173. You can then view the application in your web browser.
+
+## Running Tests
+
+This project includes automated tests to verify the functionality of the code. To run the tests locally, follow these steps:
+
+```
+# using npm
+npm run test
+
+# using yarn
+yarn test
+
+```
