@@ -45,4 +45,4 @@ npm run dev
 yarn dev
 ```
 
-This will start a local development server on http://localhost:5173. You can then view the application in your web browser.
+This will start a local development server on https://localhost:5173. You can then view the application in your web browser.

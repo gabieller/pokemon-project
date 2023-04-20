@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getPokemon } from "../../api";
+import { divideValue } from "../../utils/divideValue";
 
 import { FaRulerVertical, FaWeight } from "react-icons/fa";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-import { getPokemon } from "../../api";
+import { Container, IconButton } from "@mui/material";
 
 import * as S from "./styles";
-import { Button, Container, IconButton } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 
 interface Pokemon {
   id: string;
   name: string;
   base_experience: string;
-  sprites: Object[];
+  sprites: Array<any>;
   height: number;
   weight: number;
   types: Array<any>;
@@ -26,14 +26,8 @@ interface Pokemon {
 const Details = () => {
   const [pokemonDetails, setPokemonDetails] = useState<Pokemon>();
   const [favorites, setFavorites] = useState([]);
-  const dispatch = useDispatch();
-  const favoritesStore = useSelector((state) => state.favorites);
-  const favorite = false;
-  const { id } = useParams();
 
-  useEffect(() => {
-    setFavorites(favoritesStore);
-  }, []);
+  const { id } = useParams();
 
   const statsValue = (value) => {
     if (value <= 49) return "#ef476f";
@@ -52,21 +46,29 @@ const Details = () => {
     fetchPokemon();
   }, [id]);
 
-  // const addFavoritePokemon = (pokemon) => {
-  //   dispatch({ type: "ADD_POKEMON", payload: pokemon });
-  // };
-
-  // useEffect(() => {
-  //   favorites.forEach((el) => {
-  //     console.log(el);
-  //   });
-  // }, [favorites]);
-
-  const transformWeight = (weight: number): number => {
-    return weight / 100;
+  const loadFavoritePokemons = () => {
+    const ids = JSON.parse(localStorage.getItem("favoritesId")) || [];
+    setFavorites(ids);
   };
-  const transformHeight = (height: number): number => {
-    return height / 10;
+
+  useEffect(() => {
+    loadFavoritePokemons();
+  }, []);
+
+  const updateFavoritePokemons = (id) => {
+    const updatedFavorites = [...favorites];
+    const favoriteIndex = favorites.indexOf(id);
+    if (favoriteIndex >= 0) {
+      updatedFavorites.splice(favoriteIndex, 1);
+    } else {
+      updatedFavorites.push(id);
+    }
+    localStorage.setItem("favoritesId", JSON.stringify(updatedFavorites));
+    setFavorites(updatedFavorites);
+  };
+
+  const onHeartClick = () => {
+    updateFavoritePokemons(pokemonDetails?.id);
   };
 
   return (
@@ -76,16 +78,14 @@ const Details = () => {
           <S.ImageCard>
             <img src={pokemonDetails?.sprites.front_default} />
           </S.ImageCard>
-          {/* <IconButton onClick={addFavoritePokemon(pokemonDetails)}>
-            {favorite ? (
+          <IconButton onClick={onHeartClick}>
+            {favorites.includes(pokemonDetails?.id) ? (
               <FavoriteIcon style={{ fill: "#fff" }} />
             ) : (
               <FavoriteBorderIcon style={{ fill: "#fff" }} />
             )}
-          </IconButton> */}
+          </IconButton>
         </div>
-
-        <button onClick={addFavoritePokemon(pokemonDetails)}>FAVORITO</button>
 
         <S.Description>
           <S.Infos>
@@ -114,9 +114,9 @@ const Details = () => {
 
             <FaRulerVertical />
 
-            <span>{transformHeight(pokemonDetails?.height)}m</span>
+            <span>{divideValue(pokemonDetails?.height, 10)}m</span>
             <FaWeight />
-            <span>{transformWeight(pokemonDetails?.weight)} kg</span>
+            <span>{divideValue(pokemonDetails?.weight, 100)} kg</span>
           </S.Stats>
           <hr />
 

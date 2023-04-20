@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-export const getPokemons = async (limit, offset): Promise<any> => {
+export const getPokemons = async (limit=20, offset=0): Promise<any> => {
   try {
     const response: AxiosResponse = await axios.get(
       `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
