@@ -3,9 +3,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import NavBar from ".";
 
-//@ts-ignore
-import logo from "../../assets/logo.png";
-
 
 describe("NavBar component", () => {
   it("should render the logo image", () => {
@@ -24,7 +21,7 @@ describe("NavBar component", () => {
         <NavBar />
       </Router>
     );
-    const homeLink = screen.getByRole("link", { name: /home/i });
+    const homeLink = screen.getByRole("link", { name: /my favorite pokémons/i });
     expect(homeLink).toBeInTheDocument();
   });
 

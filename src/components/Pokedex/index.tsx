@@ -50,7 +50,7 @@ const Pokedex = () => {
   }, [page]);
 
   return (
-    <Container>
+    <Container data-testid="pokedex">
       <PokemonList pokemons={pokemons || []} />
       <Pagination
         page={page + 1}
