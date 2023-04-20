@@ -2,11 +2,16 @@ import styled from "styled-components";
 
 export const Details = styled.div`
   display: flex;
-  flex-direction: row;
-
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
   margin: 2rem 0;
+
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+    align-items: normal;
+  }
 `;
 
 export const ImageCard = styled.div`

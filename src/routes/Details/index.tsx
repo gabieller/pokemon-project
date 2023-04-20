@@ -72,7 +72,7 @@ const Details = () => {
   };
 
   return (
-    <Container>
+    <Container maxWidth="xl">
       <S.Details>
         <div>
           <S.ImageCard>

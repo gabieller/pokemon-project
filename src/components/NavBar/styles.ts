@@ -9,8 +9,10 @@ export const NavBar = styled.nav`
   width: 100%;
   height: fit-content;
   background-color: #D5A100;
+  gap: 2rem;
 
   span {
+    display:flex;
     color: white
   
   }

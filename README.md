@@ -1,9 +1,8 @@
 # <div align="center"> Pokedex React App</div>
 
-
 <img src="src/assets/pokedex.png"/>
 
-<p align="center">This is a sample React application that connects to the PokeAPI using Vite as a build tool, TypeScript for type checking, Material UI for styling, and Styled Components for additional styling options.</p>
+<p align="center">This is a sample React application that connects to the PokeAPI using Vite as a build tool, TypeScript for type checking, Material UI Styled Components for styling.</p>
 
 ## 🛠️ Technologies
 
