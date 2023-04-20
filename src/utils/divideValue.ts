@@ -1,3 +1,3 @@
-export const divideValue = (value: number, divisor: number): number => {
+export const divideValue = (value, divisor: number): number => {
     return value / divisor;
   };

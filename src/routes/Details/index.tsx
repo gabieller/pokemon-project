@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPokemon } from "../../api";
+import { Pokemon } from "../../types/Pokemon";
+
+import { statsValue } from "../../utils/statsValue";
 import { divideValue } from "../../utils/divideValue";
 
 import { FaRulerVertical, FaWeight } from "react-icons/fa";
@@ -11,31 +14,39 @@ import { Container, IconButton } from "@mui/material";
 
 import * as S from "./styles";
 
-interface Pokemon {
-  id: string;
-  name: string;
-  base_experience: string;
-  sprites: Array<any>;
-  height: number;
-  weight: number;
-  types: Array<any>;
-  abilities: Array<any>;
-  stats: Array<any>;
-}
+// interface Pokemon {
+//   id: number;
+//   name: string;
+//   base_experience: number;
+//   sprites: {
+//     front_default: string;
+//   };
+//   height: number;
+//   weight: number;
+//   types: {
+//     type: {
+//       name: string;
+//       url: string;
+//     };
+//   }[];
+//   abilities: {
+//     ability: {
+//       name: string;
+//     };
+//   }[];
+//   stats: {
+//     base_stat: number;
+//     stat: {
+//       name: string;
+//     };
+//   }[];
+// }
 
 const Details = () => {
   const [pokemonDetails, setPokemonDetails] = useState<Pokemon>();
-  const [favorite, setFavorite] = useState([]);
+  const [favorite, setFavorite] = useState<number[]>([]);
 
   const { id } = useParams();
-
-  const statsValue = (value) => {
-    if (value <= 49) return "#ef476f";
-
-    if (value <= 79) return "#ffd166";
-
-    return "#06d6a0";
-  };
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -47,6 +58,7 @@ const Details = () => {
   }, [id]);
 
   const loadFavoritePokemons = () => {
+    //@ts-ignore
     const ids = JSON.parse(localStorage.getItem("favoriteId")) || [];
     setFavorite(ids);
   };
@@ -55,7 +67,7 @@ const Details = () => {
     loadFavoritePokemons();
   }, []);
 
-  const updateFavoritePokemons = (id) => {
+  const updateFavoritePokemons = (id: number): void => {
     const updatedFavorite = [...favorite];
     const favoriteIndex = favorite.indexOf(id);
     if (favoriteIndex >= 0) {
@@ -67,8 +79,8 @@ const Details = () => {
     setFavorite(updatedFavorite);
   };
 
-  const onHeartClick = () => {
-    updateFavoritePokemons(pokemonDetails?.id);
+  const onHeartClick = (): void => {
+    pokemonDetails?.id && updateFavoritePokemons(pokemonDetails?.id);
   };
 
   return (
@@ -79,7 +91,7 @@ const Details = () => {
             <img src={pokemonDetails?.sprites.front_default} />
           </S.ImageCard>
           <IconButton onClick={onHeartClick}>
-            {favorite.includes(pokemonDetails?.id) ? (
+            {pokemonDetails?.id && favorite.includes(pokemonDetails?.id) ? (
               <FavoriteIcon style={{ fill: "#fff" }} />
             ) : (
               <FavoriteBorderIcon style={{ fill: "#fff" }} />
@@ -91,7 +103,7 @@ const Details = () => {
           <S.Infos>
             <p>{pokemonDetails?.name}</p>
 
-            {pokemonDetails?.types.map(({ type, i }) => (
+            {pokemonDetails?.types.map(({ type }, i) => (
               <S.TypeTag key={i}>{type.name}</S.TypeTag>
             ))}
           </S.Infos>
@@ -99,7 +111,7 @@ const Details = () => {
           <S.RowGrid>
             <h3>ABILITIES:</h3>
 
-            {pokemonDetails?.abilities.map(({ ability, i }) => (
+            {pokemonDetails?.abilities.map(({ ability }, i) => (
               <p key={i}>{ability.name}</p>
             ))}
           </S.RowGrid>
@@ -120,7 +132,7 @@ const Details = () => {
 
           <h3> POWER STATS:</h3>
           <S.Grid>
-            {pokemonDetails?.stats.map(({ stat, base_stat, i }) => (
+            {pokemonDetails?.stats.map(({ stat, base_stat }, i) => (
               <S.Powers key={i}>
                 <S.CircleStat bgColor={statsValue(base_stat)}>
                   <span>{base_stat}</span>

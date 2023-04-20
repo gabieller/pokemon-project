@@ -5,6 +5,9 @@ import PokemonList from "../PokemonList";
 import Pagination from "../Pagination";
 
 import { Container } from "@mui/material";
+import { Pokemon } from "../../types/Pokemon";
+import { PokeAPIResponse } from "../../types/PokeAPIResponse";
+import { PokemonListItem } from "../../types/PokemonListItem";
 
 const Pokedex = () => {
   const [page, setPage] = useState(0);
@@ -14,17 +17,20 @@ const Pokedex = () => {
   //Setting the total cads per page
   const itemsPerPage = 18;
 
-  const fetchPokemons = async () => {
+  const fetchPokemons = async (): Promise<void> => {
     try {
-      const data = await getPokemons(itemsPerPage, itemsPerPage * page);
+      const data: PokeAPIResponse<PokemonListItem> = await getPokemons(
+        itemsPerPage,
+        itemsPerPage * page
+      );
 
-      //TODO: explain code
-      const promises = data.results.map(async ({ url }) => {
+      const promises: Promise<Pokemon>[] = data.results.map(async ({ url }) => {
         return await getPokemonData(url);
       });
 
-      const results = await Promise.all(promises);
+      const results: Pokemon[] = await Promise.all(promises);
 
+      //@ts-ignore
       setPokemons(results);
       setTotalPages(Math.ceil(data.count / itemsPerPage));
     } catch (error) {
